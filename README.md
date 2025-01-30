@@ -1,8 +1,8 @@
-# API Best Practices: Highly Performant API Design - API Caching
+# Highly Performant API Design - API Caching with Laravel
 
-Mystique Unicorn App is a building new application based on microservice architectural pattern. The app provides updates on events in real-time. At any given time, there will be a number of users querying for the same data (Very much like match data of a sporting event). During the event, Mystique corp would like to keep the latency as low as possible and while maintaining the data freshness. Once the event is no longer relevant, the query load on the API will be siginificantly less and latency is not a concern. As an cloud consultant to Mystique Corp, can you help their dev team to maintain _lower latency_ and _data freshness_ of their app?
+Mystique Unicorn App is a building new application based on microservice architectural pattern. The app provides updates on events in real-time. At any given time, there will be a number of users querying for the same data (Very much like match data of a sporting event). During the event, this app would like to keep the latency as low as possible and while maintaining the data freshness. Once the event is no longer relevant, the query load on the API will be siginificantly less and latency is not a concern. As an cloud consultant to Mystique Corp, can you help their dev team to maintain _lower latency_ and _data freshness_ of their app?
 
-![API Best Practices: Highly Performant API Design](images/miztiik_api_latency_architecture_00.png)
+![Highly Performant API Design](images/miztiik_api_latency_architecture_00.png)
 
 ## 🎯Solutions
 
@@ -12,7 +12,7 @@ In-memory data caching can be one of the most effective strategies to improve yo
 
 If the rate of change of the data is very high, then cache will become stale at the same rate. It is important to choose the appropriate cache invalidation strategies. Setting _Time-To-Live(TTL)_ is one common way of invalidation. With API Gateway caching, you can cache responses to any request, including POST, PUT and PATCH. _However, this is not enabled by default._
 
-![API Best Practices: Highly Performant API Design](images/miztiik_api_caching_architecture_00.png)
+![Highly Performant API Design](images/miztiik_api_caching_architecture_00.png)
 
 In this article, we will build the above architecture. using Cloudformation generated using [AWS Cloud Development Kit (CDK)][102]. The architecture has been designed in a modular way so that we can build them individually and integrate them together. The prerequisites to build this architecture are listed below
 
@@ -32,8 +32,8 @@ In this article, we will build the above architecture. using Cloudformation gene
     - Get the application code
 
       ```bash
-      git clone https://github.com/miztiik/api-performance-with-caching
-      cd api-performance-with-caching
+      git clone https://github.com/kanes02829/laravel-api-caching
+      cd laravel-api-caching
       ```
 
 1.  ## 🚀 Prepare the dev environment to run AWS CDK
@@ -203,11 +203,11 @@ In this article, we will build the above architecture. using Cloudformation gene
 
     If we can do the same testing on `postman` we can notice latency values as well,
 
-    ![API Best Practices: Highly Performant API Design](images/miztiik_api_caching_architecture_postman_01.png)
+    ![Highly Performant API Design](images/miztiik_api_caching_architecture_postman_01.png)
 
     We can also measure the end-user latency using `curl` and push the log metrics to cloudwatch and let cloudwatch generate the graphs.
 
-    ![API Best Practices: Highly Performant API Design](images/miztiik_api_caching_architecture_02.png)
+    ![Highly Performant API Design](images/miztiik_api_caching_architecture_02.png)
 
     |Metric|Description|
     |-|-|
@@ -231,7 +231,6 @@ In this article, we will build the above architecture. using Cloudformation gene
 
     If you want to destroy all the resources created by the stack, Execute the below command to delete the stack, or _you can delete the stack from console as well_
 
-    - Resources created during [Deploying The Application](#deploying-the-application)
     - Delete CloudWatch Lambda LogGroups
     - _Any other custom resources, you have created for this demo_
 
@@ -248,53 +247,3 @@ In this article, we will build the above architecture. using Cloudformation gene
     ```
 
     This is not an exhaustive list, please carry out other necessary steps as maybe applicable to your needs.
-
-## 📌 Who is using this
-
-This repository aims to teach how to improve your api performance with caching to new developers, Solution Architects & Ops Engineers in AWS. Based on that knowledge these Udemy [course #1][103], [course #2][102] helps you build complete architecture in AWS.
-
-### 💡 Help/Suggestions or 🐛 Bugs
-
-Thank you for your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional documentation or solutions, we greatly value feedback and contributions from our community. [Start here][200]
-
-### 👋 Buy me a coffee
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q41QDGK)Buy me a [coffee ☕][900].
-
-### 📚 References
-
-1. [API Gateway Caches are local to regions][1]
-
-1. [Find latency of requests to edge-optimized API][2]
-
-1. [Using `curl` for latency measurement][3]
-
-1. [AWS Whitepaper: Database Caching Strategies Using Redis][4]
-
-1. [API Gateway VTL mapping template reference][5]
-
-1. [Delete stack that is stuck in the `DELETE_FAILED` status][6]
-
-1. [Fix Lambda-backed custom resource's stuck in `DELETE_FAILED` status or `DELETE_IN_PROGRESS`][7]
-
-### 🏷️ Metadata
-
-**Level**: 300
-
-![miztiik-success-green](https://img.shields.io/badge/miztiik-success-green)
-
-[1]: https://forums.aws.amazon.com/thread.jspa?threadID=195290#646425
-[2]: https://aws.amazon.com/premiumsupport/knowledge-center/source-latency-requests-api-gateway/
-[3]: https://github.com/awslabs/aws-support-tools/blob/master/APIGateway/Tools/curl_for_latency/curl_for_latency.sh
-[4]: https://d0.awsstatic.com/whitepapers/Database/database-caching-strategies-using-redis.pdf
-[5]: https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html
-[6]: https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-stack-delete-failed/
-[7]: https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-lambda-resource-delete/
-[100]: https://www.udemy.com/course/aws-cloud-security/?referralCode=B7F1B6C78B45ADAF77A9
-[101]: https://www.udemy.com/course/aws-cloud-security-proactive-way/?referralCode=71DC542AD4481309A441
-[102]: https://www.udemy.com/course/aws-cloud-development-kit-from-beginner-to-professional/?referralCode=E15D7FB64E417C547579
-[103]: https://www.udemy.com/course/aws-cloudformation-basics?referralCode=93AD3B1530BC871093D6
-[200]: https://github.com/miztiik/api-performance-with-caching/issues
-[899]: https://www.udemy.com/user/n-kumar/
-[900]: https://ko-fi.com/miztiik
-[901]: https://ko-fi.com/Q5Q41QDGK
